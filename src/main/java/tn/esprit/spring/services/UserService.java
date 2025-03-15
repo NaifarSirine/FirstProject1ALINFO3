@@ -1,14 +1,23 @@
 package tn.esprit.spring.services;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repositories.UserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service // ou @Component
+//@AllArgsConstructor
 public class UserService implements IUserService {
 
     UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public User add(User user) {
@@ -57,8 +66,8 @@ public class UserService implements IUserService {
 
     @Override
     public User getById(Long id) {
-       // return userRepository.findById(id).get();
-        return userRepository.findById(id).orElse(User.builder().id(0L)
+       //return userRepository.findById(id).get();
+       return userRepository.findById(id).orElse(User.builder().id(0L)
                 .firstName("Foulen")
                 .lastName("Ben Foulen").birthday(LocalDate.parse("1900-5-5"))
                 .build()
